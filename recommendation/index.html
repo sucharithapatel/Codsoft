@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f9f9f9;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 20%, rgba(0, 230, 118, 0.15), transparent),
+                        radial-gradient(circle at 80% 80%, rgba(0, 184, 148, 0.15), transparent);
+            z-index: -1;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80%;
+            max-width: 600px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        select, button {
+            padding: 12px;
+            width: 100%;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #00b894, #00e676);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 230, 118, 0.3);
+            border: none;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 230, 118, 0.4);
+        }
+
+        #recommendations {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-overlay"></div>
+    <div class="container">
+        <h2>Movie Recommendation System</h2>
+        <label for="genre">Choose a genre:</label>
+        <select id="genre">
+            <option value="" disabled selected>Select a genre</option>
+            <option value="action">Action</option>
+            <option value="comedy">Comedy</option>
+            <option value="drama">Drama</option>
+            <option value="scifi">Sci-Fi</option>
+        </select>
+        <button id="recommendButton">Get Recommendations</button>
+        <div id="recommendations"></div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const movies = {
+                action: ["Mad Max: Fury Road", "John Wick", "Gladiator"],
+                comedy: ["Superbad", "The Hangover", "Step Brothers"],
+                drama: ["Forrest Gump", "The Shawshank Redemption", "Fight Club"],
+                scifi: ["Inception", "Interstellar", "The Matrix"]
+            };
+
+            function recommendMovies() {
+                let genre = document.getElementById("genre").value;
+                
+                if (!genre) {
+                    document.getElementById("recommendations").innerHTML = "<strong>Please select a genre.</strong>";
+                    return;
+                }
+
+                let recommendations = movies[genre];
+
+                let output = recommendations 
+                    ? `<strong>Recommended Movies:</strong> ${recommendations.join(", ")}`
+                    : `<strong>No recommendations found for this genre.</strong>`;
+
+                document.getElementById("recommendations").innerHTML = output;
+            }
+            
+            document.getElementById("recommendButton").addEventListener("click", recommendMovies);
+        });
+    </script>
+</body>
+</html>
